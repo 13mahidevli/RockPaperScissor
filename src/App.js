@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import rock from "./rock.png";
 import paper from "./paper.png";
@@ -9,10 +9,12 @@ export default function App() {
   const [aiscore, setaiscore] = useState(0);
   const [color, setcolor] = useState("white");
   const [message, setmessage] = useState("START GAME");
+  const [chance, setchance] = useState(0);
   const [randomindex, setrandomindex] = useState(Math.floor(Math.random() * 2));
   let array = ["rock", " paper", "scissors"];
 
   const humanvalue = (value) => {
+    setchance(chance + 1);
     console.log("randomindex=", randomindex);
     console.log("value=", value);
     let aivalue = array[randomindex];
@@ -46,18 +48,19 @@ export default function App() {
       setcolor("green");
     }
   }, [aiscore, humanscore]);
-  
+
   function reset() {
-    setmessage("START GAME")
-    sethumanscore(0)
-    setaiscore(0)
-    setcolor('white')
+    setmessage("START GAME");
+    sethumanscore(0);
+    setaiscore(0);
+    setcolor("white");
   }
 
-  const gameover= aiscore==5 || humanscore==5;
+  const gameover = aiscore == 5 || humanscore == 5;
 
   return (
     <div className="game">
+      <div className="chanceplayed">chance played: {chance}</div>
       <h1>Rock Paper Scissors</h1>
       <h3>With Artificial Intellegence</h3>
       <div className="score">Score</div>
@@ -79,20 +82,31 @@ export default function App() {
         {message}
       </div>
       <div className="img">
-        <div onClick={!gameover? () => humanvalue("rock"):null} className="input rock">
+        <div
+          onClick={!gameover ? () => humanvalue("rock") : null}
+          className="input rock"
+        >
           <img src={rock} alt="Rock" />
           ROCK
         </div>
-        <div onClick={!gameover? () => humanvalue("paper"):null} className="input paper">
+        <div
+          onClick={!gameover ? () => humanvalue("paper") : null}
+          className="input paper"
+        >
           <img src={paper} alt="Paper" />
           PAPER
         </div>
-        <div onClick={!gameover? () => humanvalue("scissors"):null} className="input scissors">
+        <div
+          onClick={!gameover ? () => humanvalue("scissors") : null}
+          className="input scissors"
+        >
           <img src={scissors} alt="Scissors" />
           SCISSORS
         </div>
       </div>
-      <div onClick={reset} className="reset">reset</div>
+      <div onClick={reset} className="reset">
+        reset
+      </div>
     </div>
   );
 }
